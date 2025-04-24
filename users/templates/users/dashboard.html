@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    background: url('/static/images/mates3.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .dashboard-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .dashboard-header h2 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #6200ea;
+  }
+
+  .dashboard-header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .main-btn {
+    display: inline-block;
+    background: #6200ea;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(98, 0, 234, 0.4);
+  }
+
+  .add-listing-btn {
+    display: inline-block;
+    background: white;
+    color: #6200ea;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #6200ea;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 2rem;
+    transition: all 0.2s;
+  }
+
+  .add-listing-btn:hover {
+    background: #f3e8ff;
+  }
+</style>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Welcome back, {{ user.username }}!</h2>
+    <p>
+      {% if user.role == 'room_seeker' %}
+        Your perfect living space awaits
+      {% else %}
+        Manage your room listings with ease
+      {% endif %}
+    </p>
+  </div>
+
+  <a href="{% url 'room_list' %}" class="main-btn">Browse Available Rooms</a>
+
+  {% if user.role == 'room_provider' %}
+    <br>
+    <a href="{% url 'room_create' %}" class="add-listing-btn">+ Add New Listing</a>
+  {% endif %}
+</div>
+{% endblock %}

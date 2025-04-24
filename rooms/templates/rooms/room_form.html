@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container" style="
+    max-width: 600px;
+    margin: 3rem auto;
+    background-color: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+">
+    <h2 style="
+        margin-top: 0;
+        font-size: 1.8rem;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    ">
+        {% if form.instance.pk %}Edit{% else %}Add New{% endif %} Room
+    </h2>
+    
+    <form method="post" enctype="multipart/form-data" class="room-form">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="{{ field.id_for_label }}" style="
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                color: #444;
+            ">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+                <small class="help-text" style="color: #777; font-size: 0.85rem; display: block; margin-top: 0.25rem;">
+                    {{ field.help_text }}
+                </small>
+            {% endif %}
+            {% for error in field.errors %}
+                <small style="color: #d00; font-size: 0.8rem; display: block; margin-top: 0.25rem;">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        <div class="form-actions" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        ">
+            <button type="submit" class="btn-submit" style="
+                background-color: #6200ea;
+                color: white;
+                border: none;
+                padding: 0.6rem 1.4rem;
+                border-radius: 6px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            " onmouseover="this.style.backgroundColor='#4b00b5'" onmouseout="this.style.backgroundColor='#6200ea'">
+                Save
+            </button>
+            <a href="{% url 'room_list' %}" class="btn-cancel" style="
+                background-color: #eee;
+                color: #333;
+                padding: 0.6rem 1.4rem;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 500;
+                transition: background-color 0.2s ease;
+            " onmouseover="this.style.backgroundColor='#ddd'" onmouseout="this.style.backgroundColor='#eee'">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
